@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import rehypeRaw from "rehype-raw"; // <-- import this to parse HTML
+import rehypeRaw from "rehype-raw";
 import { Copy } from "lucide-react";
 import "highlight.js/styles/atom-one-dark.css";
 
@@ -17,9 +17,7 @@ function getText(children) {
 
 function CodeBlock({ node, inline, children }) {
   const classProp = node?.properties?.className || [];
-  const className = Array.isArray(classProp)
-    ? classProp.join(" ")
-    : classProp || "";
+  const className = Array.isArray(classProp) ? classProp.join(" ") : classProp || "";
   const language = className.replace(/^language-/, "");
   const code = getText(children);
 
@@ -36,41 +34,35 @@ function CodeBlock({ node, inline, children }) {
   };
 
   if (!inline) {
-    // Determine if single line
     const isSingleLine = code.split("\n").length === 1;
 
     return (
-      <div className="relative group my-2 shadow-lg rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        <pre
-          className={`overflow-auto ${
-            isSingleLine ? "p-2" : "p-3"
-          } rounded-2xl`}
-        >
+      <div className="relative my-2 rounded-2xl overflow-hidden  bg-gray-800 group">
+        <pre className={`overflow-auto ${isSingleLine ? "p-2" : "p-4"} rounded-2xl`}>
           <code className={className}>{code}</code>
         </pre>
 
+        {/* Copy button appears only on hover */}
         <button
           onClick={copyToClipboard}
-          className="absolute top-2 right-2 hidden group-hover:flex items-center gap-1 bg-gray-800 text-white text-xs px-2 py-1 rounded-lg shadow-md transition"
+          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 flex items-center gap-1 bg-gray-800 text-white text-xs px-2 py-1 rounded-lg shadow-md transition-opacity"
           aria-label="Copy code"
         >
           <Copy size={14} />
           {copied ? "Copied!" : "Copy"}
         </button>
 
-        {language && (
+        {/* {language && (
           <span className="absolute bottom-2 right-2 text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded">
             {language}
           </span>
-        )}
+        )} */}
       </div>
     );
   }
 
   return (
-    <code className="bg-gray-700 text-red-400 px-1.5 py-0.5 rounded-md">
-      {code}
-    </code>
+    <code className="bg-gray-700 text-red-400 px-1.5 py-0.5 rounded-md">{code}</code>
   );
 }
 
