@@ -57,7 +57,7 @@ export default function Sidebar({ files, onSelect, activeFile }) {
               {languageIcons[lang.toLowerCase()] || <FileText size={16} className="text-gray-300" />}
               {lang}
             </div>
-            <span className="text-lg">{openSections[lang] ? "−" : "+"}</span>
+            <span className="text-lg hover:cursor-pointer">{openSections[lang] ? "−" : "+"}</span>
           </button>
 
           {/* Accordion content */}
@@ -99,7 +99,7 @@ export default function Sidebar({ files, onSelect, activeFile }) {
                       className="p-1 text-gray-400 hover:text-gray-700 transition"
                       title="Copy file path"
                     >
-                      <Copy size={16} />
+                      {/* <Copy size={16} /> */}
                     </button>
                   </motion.div>
                 ))}

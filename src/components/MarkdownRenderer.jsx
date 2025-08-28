@@ -40,10 +40,10 @@ function CodeBlock({ node, inline, children }) {
     const isSingleLine = code.split("\n").length === 1;
 
     return (
-      <div className="relative group my-4 shadow-lg rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <div className="relative group my-2 shadow-lg rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <pre
           className={`overflow-auto ${
-            isSingleLine ? "p-2" : "p-6"
+            isSingleLine ? "p-2" : "p-3"
           } rounded-2xl`}
         >
           <code className={className}>{code}</code>
