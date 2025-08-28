@@ -12,7 +12,7 @@ export default function App() {
         </h1>
 
         <p className="text-gray-200 text-base sm:text-lg md:text-xl mb-6">
-          Browse boilerplates for different languages & frameworks
+          Browse boilerplates for different languages & frameworks.
         </p>
 
         {/* Typewriter Effect */}
