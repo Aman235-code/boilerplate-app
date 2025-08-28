@@ -40,7 +40,7 @@ export default function BoilerplatePage() {
           <MarkdownRenderer content={content} />
         ) : (
           <p className="text-gray-500 text-lg text-center sm:text-left">
-            Select a boilerplate from the sidebar.
+            Select a boilerplate from the sidebar.<br/> Created by: Aman
           </p>
         )}
       </main>

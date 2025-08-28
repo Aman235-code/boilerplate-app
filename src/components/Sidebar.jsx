@@ -38,7 +38,7 @@ export default function Sidebar({ files, onSelect, activeFile }) {
     <>
       {/* Toggle button for mobile */}
       <button
-        className="fixed top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded-lg shadow-md sm:hidden"
+        className="fixed hover:cursor-pointer top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded-lg shadow-md sm:hidden"
         onClick={() => setIsOpen(true)}
       >
         <Menu size={20} />
@@ -67,7 +67,7 @@ export default function Sidebar({ files, onSelect, activeFile }) {
           >
             {/* Close button */}
             <button
-              className="mb-4 p-2 bg-gray-800 text-white rounded-lg shadow-md"
+              className="mb-4 p-2 hover:cursor-pointer bg-gray-800 text-white rounded-lg shadow-md"
               onClick={() => setIsOpen(false)}
             >
               <X size={20} />
@@ -88,7 +88,13 @@ export default function Sidebar({ files, onSelect, activeFile }) {
 }
 
 // Sidebar content extracted to reuse for desktop and drawer
-function SidebarContent({ filtered, openSections, toggleSection, activeFile, onSelect }) {
+function SidebarContent({
+  filtered,
+  openSections,
+  toggleSection,
+  activeFile,
+  onSelect,
+}) {
   return (
     <>
       {/* Search bar */}
@@ -108,10 +114,14 @@ function SidebarContent({ filtered, openSections, toggleSection, activeFile, onS
             className="flex justify-between items-center w-full font-semibold px-3 py-2 bg-gray-700 rounded-xl hover:bg-gray-600 transition-colors shadow-sm text-white"
           >
             <div className="flex items-center gap-2 capitalize">
-              {languageIcons[lang.toLowerCase()] || <FileText size={16} className="text-gray-300" />}
+              {languageIcons[lang.toLowerCase()] || (
+                <FileText size={16} className="text-gray-300" />
+              )}
               {lang}
             </div>
-            <span className="text-lg hover:cursor-pointer">{openSections[lang] ? "−" : "+"}</span>
+            <span className="text-lg hover:cursor-pointer">
+              {openSections[lang] ? "−" : "+"}
+            </span>
           </button>
 
           {/* Accordion content */}
@@ -140,7 +150,9 @@ function SidebarContent({ filtered, openSections, toggleSection, activeFile, onS
                     onClick={() => onSelect(file.path)}
                   >
                     <div className="flex items-center gap-2 text-gray-700 font-medium">
-                      {languageIcons[file.language.toLowerCase()] || <FileText size={16} />}
+                      {languageIcons[file.language.toLowerCase()] || (
+                        <FileText size={16} />
+                      )}
                       <span>{file.name}</span>
                     </div>
                   </motion.div>

@@ -29,7 +29,7 @@ export default function App() {
         </p>
 
         {/* Creator */}
-        <p className="mt-4 text-gray-300 text-xs sm:text-sm md:text-sm lg:text-sm">
+        <p className="mt-4 text-gray-300 sm:text-sm md:text-sm lg:text-sm">
           Created by Aman
         </p>
       </header>
