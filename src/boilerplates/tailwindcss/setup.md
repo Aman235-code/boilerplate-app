@@ -11,9 +11,9 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
-plugins: [
-tailwindcss(),
-],
+  plugins: [
+   tailwindcss(),
+  ],
 })</code></pre>
 <hr class="my-4 border-gray-600"/>
 <p class="text-white mb-2">3. Replace your index.css file with this line</p>
