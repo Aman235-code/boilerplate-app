@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy } from "lucide-react";
+import { Copy, FileText, Code, Server } from "lucide-react";
+import { SiTailwindcss, SiReact, SiPython, SiNodedotjs } from "react-icons/si";
+
+const languageIcons = {
+  nodejs: <SiNodedotjs size={18} className="text-green-500" />,
+  react: <SiReact size={18} className="text-blue-500" />,
+  python: <SiPython size={18} className="text-yellow-500" />,
+  tailwindcss: <SiTailwindcss size={18} className="text-teal-500" />,
+};
 
 export default function Sidebar({ files, onSelect, activeFile }) {
   const [search, setSearch] = useState("");
@@ -17,7 +25,7 @@ export default function Sidebar({ files, onSelect, activeFile }) {
     return acc;
   }, {});
 
-  // Apply search filter
+  // Filter by search
   const filtered = Object.fromEntries(
     Object.entries(grouped).map(([lang, items]) => [
       lang,
@@ -28,25 +36,28 @@ export default function Sidebar({ files, onSelect, activeFile }) {
   );
 
   return (
-    <aside className="w-72 bg-white shadow-xl rounded-2xl p-4 h-[80vh] overflow-y-auto">
+    <aside className="w-72 bg-[#322f4a] shadow-2xl rounded-2xl p-4 h-[80vh] overflow-y-auto">
       {/* Search bar */}
-      <input
+      {/* <input
         type="text"
         placeholder="Search boilerplates..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-      />
+        className="w-full px-4 py-2 mb-4 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+      /> */}
 
       {Object.entries(filtered).map(([lang, items]) => (
-        <div key={lang} className="mb-3">
+        <div key={lang} className="mb-4">
           {/* Accordion header */}
           <button
             onClick={() => toggleSection(lang)}
-            className="flex justify-between items-center w-full font-semibold px-2 py-2 bg-gray-100 rounded-xl hover:bg-gray-200 transition"
+            className="flex justify-between items-center w-full font-semibold px-3 py-2 bg-gray-700 rounded-xl hover:bg-gray-600 transition-colors shadow-sm text-white"
           >
-            {lang.toUpperCase()}
-            <span>{openSections[lang] ? "−" : "+"}</span>
+            <div className="flex items-center gap-2 capitalize">
+              {languageIcons[lang.toLowerCase()] || <FileText size={16} className="text-gray-300" />}
+              {lang}
+            </div>
+            <span className="text-lg">{openSections[lang] ? "−" : "+"}</span>
           </button>
 
           {/* Accordion content */}
@@ -56,33 +67,41 @@ export default function Sidebar({ files, onSelect, activeFile }) {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="pl-2 mt-2 space-y-2"
+                transition={{ duration: 0.25 }}
+                className="pl-4 mt-2 space-y-2"
               >
                 {items.map((file) => (
-                  <div
+                  <motion.div
                     key={file.path}
+                    layout
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+                    }}
                     className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition ${
                       activeFile === file.path
-                        ? "bg-blue-50 border-blue-400 shadow-md"
-                        : "bg-white border-gray-200 hover:shadow"
+                        ? "bg-indigo-50 border-indigo-400 shadow-md"
+                        : "bg-white border-gray-200"
                     }`}
                     onClick={() => onSelect(file.path)}
                   >
-                    <span className="text-sm font-medium text-gray-700">
-                      {file.name}
-                    </span>
+                    <div className="flex items-center gap-2 text-gray-700 font-medium">
+                      {languageIcons[file.language.toLowerCase()] || (
+                        <FileText size={16} />
+                      )}
+                      <span>{file.name}</span>
+                    </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         navigator.clipboard.writeText(file.path);
                       }}
-                      className="p-1 text-gray-500 hover:text-gray-800"
+                      className="p-1 text-gray-400 hover:text-gray-700 transition"
                       title="Copy file path"
                     >
                       <Copy size={16} />
                     </button>
-                  </div>
+                  </motion.div>
                 ))}
               </motion.div>
             )}

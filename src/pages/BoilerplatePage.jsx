@@ -3,7 +3,9 @@ import MarkdownRenderer from "../components/MarkdownRenderer";
 import Sidebar from "../components/Sidebar";
 
 // Import all markdown files
-const files = import.meta.glob("/boilerplates/**/*.md", { as: "raw" });
+const files = import.meta.glob("../boilerplates/**/*.md", { as: "raw" });
+
+console.log(files);
 
 export default function BoilerplatePage() {
   const [content, setContent] = useState("");
@@ -22,6 +24,7 @@ export default function BoilerplatePage() {
 
   const loadFile = async (path) => {
     const file = files[path];
+    console.log("Loading file:", file);
     if (file) {
       const raw = await file();
       setContent(raw);
