@@ -52,11 +52,7 @@ function CodeBlock({ node, inline, children }) {
           {copied ? "Copied!" : "Copy"}
         </button>
 
-        {/* {language && (
-          <span className="absolute bottom-2 right-2 text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded">
-            {language}
-          </span>
-        )} */}
+        
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, FileText, Code, Server } from "lucide-react";
+import { Copy, FileText, Menu, X } from "lucide-react";
 import { SiTailwindcss, SiReact, SiPython, SiNodedotjs } from "react-icons/si";
 
 const languageIcons = {
@@ -13,19 +13,18 @@ const languageIcons = {
 export default function Sidebar({ files, onSelect, activeFile }) {
   const [search, setSearch] = useState("");
   const [openSections, setOpenSections] = useState({});
+  const [isOpen, setIsOpen] = useState(false); // Drawer state
 
   const toggleSection = (lang) => {
     setOpenSections((prev) => ({ ...prev, [lang]: !prev[lang] }));
   };
 
-  // Group files by language
   const grouped = files.reduce((acc, file) => {
     acc[file.language] = acc[file.language] || [];
     acc[file.language].push(file);
     return acc;
   }, {});
 
-  // Filter by search
   const filtered = Object.fromEntries(
     Object.entries(grouped).map(([lang, items]) => [
       lang,
@@ -36,14 +35,69 @@ export default function Sidebar({ files, onSelect, activeFile }) {
   );
 
   return (
-    <aside className="w-72 bg-[#322f4a] shadow-2xl rounded-2xl p-4 h-[80vh] overflow-y-auto">
+    <>
+      {/* Toggle button for mobile */}
+      <button
+        className="fixed top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded-lg shadow-md sm:hidden"
+        onClick={() => setIsOpen(true)}
+      >
+        <Menu size={20} />
+      </button>
+
+      {/* Sidebar for desktop */}
+      <aside className="hidden sm:block w-72 bg-[#322f4a] shadow-2xl rounded-2xl p-4 h-[80vh] overflow-y-auto">
+        <SidebarContent
+          filtered={filtered}
+          openSections={openSections}
+          toggleSection={toggleSection}
+          activeFile={activeFile}
+          onSelect={onSelect}
+        />
+      </aside>
+
+      {/* Drawer for mobile */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed top-0 right-0 h-full w-72 bg-[#322f4a] shadow-2xl p-4 z-50 overflow-y-auto sm:hidden"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.3 }}
+          >
+            {/* Close button */}
+            <button
+              className="mb-4 p-2 bg-gray-800 text-white rounded-lg shadow-md"
+              onClick={() => setIsOpen(false)}
+            >
+              <X size={20} />
+            </button>
+
+            <SidebarContent
+              filtered={filtered}
+              openSections={openSections}
+              toggleSection={toggleSection}
+              activeFile={activeFile}
+              onSelect={onSelect}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+// Sidebar content extracted to reuse for desktop and drawer
+function SidebarContent({ filtered, openSections, toggleSection, activeFile, onSelect }) {
+  return (
+    <>
       {/* Search bar */}
       {/* <input
         type="text"
         placeholder="Search boilerplates..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-4 py-2 mb-4 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-xl text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
       /> */}
 
       {Object.entries(filtered).map(([lang, items]) => (
@@ -86,21 +140,9 @@ export default function Sidebar({ files, onSelect, activeFile }) {
                     onClick={() => onSelect(file.path)}
                   >
                     <div className="flex items-center gap-2 text-gray-700 font-medium">
-                      {languageIcons[file.language.toLowerCase()] || (
-                        <FileText size={16} />
-                      )}
+                      {languageIcons[file.language.toLowerCase()] || <FileText size={16} />}
                       <span>{file.name}</span>
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigator.clipboard.writeText(file.path);
-                      }}
-                      className="p-1 text-gray-400 hover:text-gray-700 transition"
-                      title="Copy file path"
-                    >
-                      {/* <Copy size={16} /> */}
-                    </button>
                   </motion.div>
                 ))}
               </motion.div>
@@ -108,6 +150,6 @@ export default function Sidebar({ files, onSelect, activeFile }) {
           </AnimatePresence>
         </div>
       ))}
-    </aside>
+    </>
   );
 }

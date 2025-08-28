@@ -5,8 +5,6 @@ import Sidebar from "../components/Sidebar";
 // Import all markdown files
 const files = import.meta.glob("../boilerplates/**/*.md", { as: "raw" });
 
-console.log(files);
-
 export default function BoilerplatePage() {
   const [content, setContent] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -24,7 +22,6 @@ export default function BoilerplatePage() {
 
   const loadFile = async (path) => {
     const file = files[path];
-    console.log("Loading file:", file);
     if (file) {
       const raw = await file();
       setContent(raw);
@@ -33,16 +30,16 @@ export default function BoilerplatePage() {
   };
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full">
       {/* Sidebar */}
       <Sidebar files={fileList} onSelect={loadFile} activeFile={activeFile} />
 
       {/* Content panel */}
-      <main className="flex-1 prose max-w-none bg-[#322f4a] p-6 rounded-xl shadow overflow-y-auto h-[80vh]">
+      <main className="flex-1 prose max-w-none bg-[#322f4a] p-4 sm:p-6 rounded-xl shadow overflow-y-auto h-[80vh]">
         {content ? (
           <MarkdownRenderer content={content} />
         ) : (
-          <p className="text-gray-500 text-lg">
+          <p className="text-gray-500 text-lg text-center sm:text-left">
             Select a boilerplate from the sidebar.
           </p>
         )}
