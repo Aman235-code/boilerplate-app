@@ -35,7 +35,7 @@ export default function BoilerplatePage() {
       <Sidebar files={fileList} onSelect={loadFile} activeFile={activeFile} />
 
       {/* Content panel */}
-      <main className="flex-1 prose max-w-none bg-white p-6 rounded-xl shadow overflow-y-auto h-[80vh]">
+      <main className="flex-1 prose max-w-none bg-[#322f4a] p-6 rounded-xl shadow overflow-y-auto h-[80vh]">
         {content ? (
           <MarkdownRenderer content={content} />
         ) : (
