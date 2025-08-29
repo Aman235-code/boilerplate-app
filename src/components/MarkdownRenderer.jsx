@@ -1,11 +1,12 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import { Copy } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import "highlight.js/styles/atom-one-dark.css";
+// import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/an-old-hope.css";
 
 // Helper to extract plain text from ReactMarkdown children
 function getText(children) {
@@ -18,7 +19,9 @@ function getText(children) {
 
 function CodeBlock({ node, inline, children }) {
   const classProp = node?.properties?.className || [];
-  const className = Array.isArray(classProp) ? classProp.join(" ") : classProp || "";
+  const className = Array.isArray(classProp)
+    ? classProp.join(" ")
+    : classProp || "";
   const language = className.replace(/^language-/, "");
   const code = getText(children);
   const [copied, setCopied] = useState(false);
@@ -38,9 +41,13 @@ function CodeBlock({ node, inline, children }) {
     const isSingleLine = code.split("\n").length === 1;
 
     return (
-      <div className="relative my-2 rounded-2xl overflow-hidden bg-gray-800 group">
-        <pre className={`overflow-auto ${isSingleLine ? "p-2" : "p-4"} rounded-2xl`}>
-          <code className={className}>{code}</code>
+      <div className="relative my-2 rounded-2xl overflow-hidden  group">
+        <pre
+          className={`overflow-auto ${
+            isSingleLine ? "p-2" : "p-4"
+          } rounded-2xl`}
+        >
+          <code className={`hljs ${className}`}>{code}</code>
         </pre>
 
         {/* Copy button */}
@@ -52,14 +59,14 @@ function CodeBlock({ node, inline, children }) {
           <Copy size={14} />
           {copied ? "Copied!" : "Copy"}
         </button>
-
-       
       </div>
     );
   }
 
   return (
-    <code className="bg-gray-700 text-red-400 px-1.5 py-0.5 rounded-md">{code}</code>
+    <code className="bg-gray-700 text-red-400 px-1.5 py-0.5 rounded-md">
+      {code}
+    </code>
   );
 }
 
