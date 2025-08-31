@@ -18,7 +18,15 @@ export default function App() {
         {/* Typewriter Effect */}
         <p className="text-indigo-400 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-4">
           <Typewriter
-            words={["Node.js", "React.js", "Python", "Tailwind CSS"]}
+            words={[
+              "Node.js",
+              "React.js",
+              "Python",
+              "Tailwind CSS",
+              "HTML",
+              "CSS",
+              "Javascript",
+            ]}
             loop={0}
             cursor
             cursorStyle="|"

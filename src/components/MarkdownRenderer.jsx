@@ -47,7 +47,7 @@ function CodeBlock({ node, inline, children }) {
             isSingleLine ? "p-2" : "p-4"
           } rounded-2xl`}
         >
-          <code className={`hljs ${className}`}>{code}</code>
+          <code className={` ${className}`}>{code}</code>
         </pre>
 
         {/* Copy button */}

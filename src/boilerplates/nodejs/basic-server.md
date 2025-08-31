@@ -18,6 +18,7 @@
 <h3 class="text-white font-semibold mb-2">Server code (index.js)</h3>
 
 <pre class="bg-gray-800 rounded-lg p-1 mb-4"><code class="language-js">
+
 // index.js
 const express = require('express')
 const cors = require('cors')

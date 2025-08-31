@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, FileText, Menu, X } from "lucide-react";
-import { SiTailwindcss, SiReact, SiPython, SiNodedotjs,SiHtml5,SiExpress } from "react-icons/si";
+import { FileText, Menu, X } from "lucide-react";
+import {
+  SiTailwindcss,
+  SiReact,
+  SiPython,
+  SiNodedotjs,
+  SiHtml5,
+  SiExpress,
+  SiCss3,
+  SiJavascript,
+} from "react-icons/si";
 
 const languageIcons = {
   nodejs: <SiNodedotjs size={18} className="text-green-500" />,
@@ -10,6 +19,8 @@ const languageIcons = {
   tailwindcss: <SiTailwindcss size={18} className="text-teal-500" />,
   html: <SiHtml5 size={18} className="text-orange-500" />,
   expressjs: <SiExpress size={18} className="text-black" />,
+  css: <SiCss3 size={18} className="text-blue-500" />,
+  javascript: <SiJavascript size={18} className="text-yellow-400" />,
 };
 
 export default function Sidebar({ files, onSelect, activeFile }) {
